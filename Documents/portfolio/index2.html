@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ganna Eslam - AI Developer & Data Scientist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0d0221;
+            --bg-secondary: #1a0b2e;
+            --bg-card: #16213e;
+            --accent-blue: #00fff5;
+            --accent-purple: #7209b7;
+            --accent-pink: #f72585;
+            --accent-gold: #ffd60a;
+            --text-primary: #e0e1dd;
+            --text-secondary: #9d9fa2;
+            --gradient: linear-gradient(135deg, #00fff5 0%, #7209b7 50%, #f72585 100%);
+            --gradient-alt: linear-gradient(45deg, #ffd60a 0%, #f72585 100%);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: 
+                linear-gradient(125deg, #0d0221 0%, #1a0b2e 50%, #0d0221 100%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            line-height: 1.6;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 245, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(247, 37, 133, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(114, 9, 183, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(0, 255, 245, 0.02) 2px, rgba(0, 255, 245, 0.02) 4px),
+                repeating-linear-gradient(90deg, transparent 0px, transparent 2px, rgba(247, 37, 133, 0.02) 2px, rgba(247, 37, 133, 0.02) 4px);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(90deg, rgba(13, 2, 33, 0.98) 0%, rgba(26, 11, 46, 0.98) 100%);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 0;
+            z-index: 1000;
+            border-bottom: 2px solid transparent;
+            border-image: var(--gradient);
+            border-image-slice: 1;
+            box-shadow: 0 4px 20px rgba(0, 255, 245, 0.15);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 5rem 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Hero Section */
+        #hero {
+            text-align: center;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(114, 9, 183, 0.15), transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(247, 37, 133, 0.15), transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(0, 255, 245, 0.1), transparent 60%);
+            position: relative;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 245, 0.03) 2px, rgba(0, 255, 245, 0.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(114, 9, 183, 0.03) 2px, rgba(114, 9, 183, 0.03) 4px);
+            pointer-events: none;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content h2 {
+            font-size: 2rem;
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* About Section */
+        #about {
+            background-color: var(--bg-secondary);
+        }
+
+        .about-content {
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 2px solid transparent;
+            background-image: 
+                linear-gradient(var(--bg-card), var(--bg-card)),
+                var(--gradient);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            box-shadow: 
+                0 10px 40px rgba(0, 255, 245, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 255, 245, 0.05) 0%, transparent 70%);
+            opacity: 0.5;
+        }
+
+        .about-content p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .highlight {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        /* Education Section */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .edu-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--accent-blue);
+            transition: all 0.3s ease;
+        }
+
+        .edu-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 217, 255, 0.3);
+        }
+
+        .edu-card h3 {
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .edu-card p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Skills Section */
+        #skills {
+            background-color: var(--bg-secondary);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(181, 55, 242, 0.3);
+        }
+
+        .skill-category h3 {
+            color: var(--accent-purple);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .skill-tag {
+            background: rgba(0, 217, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            color: var(--accent-blue);
+            border: 1px solid var(--accent-blue);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: rgba(0, 217, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 0, 110, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(255, 0, 110, 0.3);
+            border-color: var(--accent-pink);
+        }
+
+        .project-card h3 {
+            color: var(--accent-pink);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .project-objective {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .project-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tool-badge {
+            background: rgba(181, 55, 242, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: var(--accent-purple);
+        }
+
+        .project-result {
+            color: var(--accent-blue);
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        /* Services Section */
+        #services {
+            background-color: var(--bg-secondary);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .contact-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-blue);
+        }
+
+        .contact-card h3 {
+            color: var(--accent-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-card a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-card a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-secondary);
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            border-top: 1px solid rgba(0, 217, 255, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Ganna Eslam</h1>
+                <h2>AI Developer & Data Scientist</h2>
+                <p>"I turn data into decisions through AI."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <p>My journey began with curiosity about how machines could think and understand us. This fascination led me to pursue a passion for transforming raw data into smart, actionable decisions through the power of artificial intelligence.</p>
+                <p>I believe that <span class="highlight">AI is a tool to solve real problems</span>, not just a theoretical concept. Every dataset tells a story, and my mission is to uncover insights that drive meaningful change.</p>
+                <p>Currently, I am part of the <span class="highlight">Digital Egypt Pioneers (DEPI) Generative AI Track</span>, where I continue to expand my knowledge and contribute to cutting-edge AI solutions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education">
+        <div class="container">
+            <h2 class="section-title">Education & Experience</h2>
+            <div class="education-grid">
+                <div class="edu-card">
+                    <h3>🎓 Education</h3>
+                    <p><strong>Benha University</strong></p>
+                    <p>Faculty of Computer and Artificial Intelligence</p>
+                    <p>2022 - 2026</p>
+                </div>
+                <div class="edu-card">
+                    <h3>📜 Certifications</h3>
+                    <p><strong>Huawei HCIA-AI V3.5</strong></p>
+                    <p>Certified AI Professional</p>
+                    <p><strong>Excel for Data Analysis</strong></p>
+                    <p>Advanced Data Processing</p>
+                </div>
+                <div class="edu-card">
+                    <h3>💼 Internships</h3>
+                    <p><strong>ITI</strong> - AI & BI Development Tracks</p>
+                    <p><strong>NTI</strong> - Machine Learning</p>
+                </div>
+                <div class="edu-card">
+                    <h3>🤝 Community Involvement</h3>
+                    <p><strong>IEEE AI Committee</strong></p>
+                    <p>Active member developing technical and soft skills through collaborative projects and knowledge sharing</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>💻 Programming & Development</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">Dart</span>
+                        <span class="skill-tag">Flutter</span>
+                        <span class="skill-tag">OOP</span>
+                        <span class="skill-tag">Data Structures</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>🧠 Data Science & AI</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Data Analysis</span>
+                        <span class="skill-tag">Machine Learning</span>
+                        <span class="skill-tag">Deep Learning</span>
+                        <span class="skill-tag">NLP</span>
+                        <span class="skill-tag">Neural Networks</span>
+                        <span class="skill-tag">Computer Vision</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>🛠️ Tools & Libraries</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">Keras</span>
+                        <span class="skill-tag">Power BI</span>
+                        <span class="skill-tag">Excel</span>
+                        <span class="skill-tag">Pandas</span>
+                        <span class="skill-tag">Matplotlib</span>
+                        <span class="skill-tag">Scikit-learn</span>
+                        <span class="skill-tag">NLTK</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>🌿 Plant Disease Detection</h3>
+                    <p class="project-objective"><strong>Objective:</strong> Identify 38 types of plant diseases using advanced image classification techniques</p>
+                    <div class="project-tools">
+                        <span class="tool-badge">Python</span>
+                        <span class="tool-badge">TensorFlow</span>
+                        <span class="tool-badge">VGG16</span>
+                        <span class="tool-badge">CNN</span>
+                        <span class="tool-badge">MobileNetV2</span>
+                        <span class="tool-badge">Xception</span>
+                        <span class="tool-badge">Transfer Learning</span>
+                    </div>
+                    <p class="project-result">✅ Result: Achieved 95%+ accuracy in disease classification</p>
+                </div>
+
+                <div class="project-card">
+                    <h3>💬 Tweet Sentiment Analysis</h3>
+                    <p class="project-objective"><strong>Objective:</strong> Classify tweets as positive, negative, or neutral to understand public sentiment</p>
+                    <div class="project-tools">
+                        <span class="tool-badge">Python</span>
+                        <span class="tool-badge">NLTK</span>
+                        <span class="tool-badge">Sklearn</span>
+                        <span class="tool-badge">CountVectorizer</span>
+                        <span class="tool-badge">Logistic Regression</span>
+                        <span class="tool-badge">NLP</span>
+                    </div>
+                    <p class="project-result">✅ Result: Built a reliable sentiment analysis tool for social media monitoring</p>
+                </div>
+
+                <div class="project-card">
+                    <h3>💳 Credit Card Fraud Detection</h3>
+                    <p class="project-objective"><strong>Objective:</strong> Detect fraudulent credit card transactions using machine learning algorithms</p>
+                    <div class="project-tools">
+                        <span class="tool-badge">Python</span>
+                        <span class="tool-badge">Pandas</span>
+                        <span class="tool-badge">Random Forest</span>
+                        <span class="tool-badge">SMOTE</span>
+                        <span class="tool-badge">ROC Curve</span>
+                        <span class="tool-badge">Classification</span>
+                    </div>
+                    <p class="project-result">✅ Result: Achieved high precision in identifying fraudulent transactions</p>
+                </div>
+
+                <div class="project-card">
+                    <h3>📊 Sales & Insights Dashboard</h3>
+                    <p class="project-objective"><strong>Objective:</strong> Visualize and analyze business data interactively for data-driven decision making</p>
+                    <div class="project-tools">
+                        <span class="tool-badge">Power BI</span>
+                        <span class="tool-badge">Excel</span>
+                        <span class="tool-badge">Power Query</span>
+                        <span class="tool-badge">DAX</span>
+                        <span class="tool-badge">Data Visualization</span>
+                    </div>
+                    <p class="project-result">✅ Result: Created professional, interactive dashboard for real-time business insights</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <h2 class="section-title">What I Offer</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🤖</div>
+                    <h3>Custom ML Models</h3>
+                    <p>Build tailored machine learning models designed to solve your specific business challenges</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🧹</div>
+                    <h3>Data Preprocessing</h3>
+                    <p>Clean and prepare your data for analysis with advanced preprocessing techniques</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📈</div>
+                    <h3>Data Analysis & Visualization</h3>
+                    <p>Transform complex data into clear, actionable insights using Power BI and Python</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💬</div>
+                    <h3>NLP Solutions</h3>
+                    <p>Implement text classification and natural language processing for your applications</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎯</div>
+                    <h3>Predictive Modeling</h3>
+                    <p>Train accurate models for forecasting and prediction to drive strategic decisions</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>Interactive Dashboards</h3>
+                    <p>Create insightful, real-time dashboards that empower your team with data intelligence</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">📧</div>
+                    <h3>Email</h3>
+                    <a href="mailto:gannaeslam38@gmail.com">gannaeslam38@gmail.com</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📱</div>
+                    <h3>Phone</h3>
+                    <a href="tel:+201102297526">+20 110 229 7526</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">💼</div>
+                    <h3>LinkedIn</h3>
+                    <a href="https://linkedin.com/in/ganna-eslam-0b600a267" target="_blank">Connect with me</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Ganna Eslam. All rights reserved. Built with passion for AI and Data Science.</p>
+    </footer>
+</body>
+</html>
