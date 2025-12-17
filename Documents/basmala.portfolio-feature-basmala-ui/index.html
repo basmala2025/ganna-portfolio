@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basmala Ahmed - AI & Web Developer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #e2e8f0;
+            background: #0a0a0a;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+/* Education Section */
+        .education-container {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .education-item {
+            background: rgba(139, 92, 246, 0.05);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .education-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6, #10b981);
+        }
+
+        .education-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+
+        .education-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .education-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+        }
+
+        .education-info {
+            flex: 1;
+        }
+
+        .education-degree {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-institution {
+            font-size: 1.1rem;
+            color: #8b5cf6;
+            font-weight: 600;
+        }
+
+        .education-description {
+            color: #cbd5e1;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-top: 1rem;
+        }
+
+        .education-type {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #10b981;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+            animation: backgroundPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes backgroundPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(139, 92, 246, 0.6);
+            border-radius: 50%;
+            animation: float 10s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #8b5cf6;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from {
+                filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5));
+            }
+            to {
+                filter: drop-shadow(0 0 30px rgba(59, 130, 246, 0.7));
+            }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 100px 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        .about-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-card {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(139, 92, 246, 0.3), transparent);
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .profile-inner {
+            width: 280px;
+            height: 280px;
+            background: #0a0a0a;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .resume-button {
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .resume-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .skill-category {
+            background: rgba(139, 92, 246, 0.05);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.1);
+        }
+
+        .skill-category h3 {
+            color: #8b5cf6;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .skill-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-item {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            transform: scale(1.05);
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        /* Projects Section */
+        .projects-container {
+            margin-bottom: 4rem;
+        }
+
+        .project-category {
+            margin-bottom: 4rem;
+        }
+
+        .project-category h3 {
+            font-size: 2rem;
+            color: #8b5cf6;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(139, 92, 246, 0.05);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .project-card h4 {
+            font-size: 1.5rem;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+        }
+
+        .project-card p {
+            color: #cbd5e1;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #10b981;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .contact-item {
+            background: rgba(139, 92, 246, 0.05);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            color: #8b5cf6;
+            margin-bottom: 1rem;
+        }
+
+        .contact-item h4 {
+            font-size: 1.2rem;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: #8b5cf6;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .about-content,
+            .skills-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 60px 1rem;
+            }
+             .education-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Basmala Ahmed</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Basmala Ahmed</h1>
+            <p>Computer & AI Student | MEAN Stack Developer | AI Enthusiast</p>
+            <p>Bridging AI and Web Development to Build Smarter Digital Experiences</p>
+            <a href="#about" class="cta-button">Discover My Journey</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <h2 class="section-title fade-in">About Me</h2>
+        <div class="about-content">
+            <div class="about-text fade-in">
+                <p>I'm a Computer and Artificial Intelligence student with a strong interest in computer science, web development, and AI. Currently learning MEAN Stack development and building a solid foundation in Artificial Intelligence.</p>
+                <p>Passionate about technology, continuous learning, and turning ideas into real-world solutions. I believe in the power of innovation to create meaningful impact in our digital world.</p>
+                <a href="https://drive.google.com/file/d/1e4EYXm5UZ5uOZq3dPJ5okfOuP-rvga3q/view?usp=sharing" class="resume-button">
+                    <i class="fas fa-download"></i>
+                    Download Resume
+                </a>
+            </div>  
+            <div class="about-image fade-in">
+                <div class="profile-card">
+                    <div class="profile-inner">
+                        <i class="fas fa-user-graduate" style="font-size: 4rem; color: #8b5cf6; margin-bottom: 1rem;"></i>
+                        <h3 style="color: #3b82f6;">AI & Web Developer</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<section id="education" class="section">
+        <h2 class="section-title fade-in">Education & Certifications</h2>
+        <div class="education-container">
+            
+            <!-- Bachelor's Degree -->
+            <div class="education-item fade-in">
+                <div class="education-header">
+                    <div class="education-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="education-info">
+                        <div class="education-degree">Bachelor of Computer and Artificial Intelligence</div>
+                        <div class="education-institution">Bachelor of Science in Computer Science, Specialization in Artificial Intelligence</div>
+                    </div>
+                </div>
+                <div class="education-type">Degree Program</div>
+            </div>
+
+            <!-- Generative AI Professional -->
+            <div class="education-item fade-in">
+                <div class="education-header">
+                    <div class="education-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="education-info">
+                        <div class="education-degree">Generative AI Professional</div>
+                        <div class="education-institution">Digital Egypt Pioneers Initiative (DEPI)</div>
+                    </div>
+                </div>
+                <div class="education-description">
+                    Advanced certification program focusing on generative artificial intelligence technologies, including large language models, neural networks, and AI-powered content generation systems.
+                </div>
+                <div class="education-type">Professional Certification</div>
+            </div>
+
+            <!-- MEAN Stack Development -->
+            <div class="education-item fade-in">
+                <div class="education-header">
+                    <div class="education-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="education-info">
+                        <div class="education-degree">MEAN-Stack Web Development</div>
+                        <div class="education-institution">Digital Egypt Youth (DEY) - Creativa Innovation Hubs NTI</div>
+                    </div>
+                </div>
+                <div class="education-description">
+                    Comprehensive training in full-stack web development using MongoDB, Express.js, Angular, and Node.js. Covered modern web development practices, RESTful APIs, and database management.
+                </div>
+                <div class="education-type">Web Development Program</div>
+            </div>
+
+            <!-- Full Stack Diploma -->
+            <div class="education-item fade-in">
+                <div class="education-header">
+                    <div class="education-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="education-info">
+                        <div class="education-degree">Professional Full Stack Diploma - Web Development</div>
+                        <div class="education-institution">YAT Learning Centers - Maadi</div>
+                    </div>
+                </div>
+                <div class="education-description">
+                    Professional diploma program covering both front-end and back-end development technologies, including modern frameworks, database design, and industry best practices for full-stack development.
+                </div>
+                <div class="education-type">Professional Diploma</div>
+            </div>
+
+        </div>
+    </section>
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <h2 class="section-title fade-in">Skills & Expertise</h2>
+        <div class="skills-container">
+            <div class="skill-category fade-in">
+                <h3><i class="fas fa-robot"></i> AI Skills</h3>
+                <div class="skill-grid">
+                    <div class="skill-item">
+                        <i class="fas fa-brain" style="color: #8b5cf6; margin-bottom: 0.5rem;"></i>
+                        <p>Machine Learning</p>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-language" style="color: #3b82f6; margin-bottom: 0.5rem;"></i>
+                        <p>NLP</p>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-network-wired" style="color: #10b981; margin-bottom: 0.5rem;"></i>
+                        <p>Neural Networks</p>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-category fade-in">
+                <h3><i class="fas fa-code"></i> Web Development</h3>
+                <div class="skill-grid">
+                    <div class="skill-item">
+                        <i class="fas fa-database" style="color: #059669; margin-bottom: 0.5rem;"></i>
+                        <p>MongoDB</p>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-server" style="color: #dc2626; margin-bottom: 0.5rem;"></i>
+                        <p>Express.js</p>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fab fa-angular" style="color: #dc2626; margin-bottom: 0.5rem;"></i>
+                        <p>Angular</p>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fab fa-node-js" style="color: #059669; margin-bottom: 0.5rem;"></i>
+                        <p>Node.js</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="skills-container" style="margin-top: 3rem;">
+            <div class="skill-category fade-in">
+                <h3><i class="fas fa-users"></i> Soft Skills</h3>
+                <div class="skill-grid">
+                    <div class="skill-item">
+                        <i class="fas fa-lightbulb" style="color: #8b5cf6; margin-bottom: 0.5rem;"></i>
+                        <p>Teamwork</p>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-lightbulb" style="color: #0bf570; margin-bottom: 0.5rem;"></i>
+                        <p>Learning Agility</p>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-lightbulb" style="color: #f59e0b; margin-bottom: 0.5rem;"></i>
+                        <p>Communication</p>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-lightbulb" style="color: #8b5cf6; margin-bottom: 0.5rem;"></i>
+                        <p>Problem-solving</p>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-lightbulb" style="color: #dc2626; margin-bottom: 0.5rem;"></i>
+                        <p>Adaptability</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <h2 class="section-title fade-in">My Projects</h2>
+        
+        <div class="project-category fade-in">
+            <h3><i class="fas fa-globe"></i> Web Development Projects</h3>
+                       <div class="project-grid">
+
+                        <!-- here -->
+                        <div class="project-card">
+                            <h4>Etsy</h4>
+                            <img src="img/Screenshot 2025-12-17 235555.png" alt="" width="300px" style="border-radius: 15px">
+                            <p>ُEtsy is an online marketplace where creative sellers showcase their handmade,
+                                 vintage.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML/CSS</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">Angular</span>
+                            <!-- <span class="tech-tag">Node.js</span> -->
+                        </div>
+                        <div class="project-links">
+                            <a href="https://basmala2025.github.io/etsy/" class="project-link">Live Demo</a>
+                            <!-- <a href="#" class="project-link">GitHub</a> -->
+                        </div>
+                    </div>
+                        <div class="project-card">
+                            <h4>Skillak</h4>
+                            <img src="img/Screenshot 2025-12-17 235726.png" alt="" width="300px" style="border-radius: 15px">
+                            <p>Skillak – Explore courses, learn skills, and grow with a clean, mint-green learning platform.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML/CSS</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">Angular</span>
+                            <!-- <span class="tech-tag">Node.js</span> -->
+                        </div>
+                        <div class="project-links">
+                            <a href="https://basmala2025.github.io/skillak/" class="project-link">Live Demo</a>
+                            <!-- <a href="#" class="project-link">GitHub</a> -->
+                        </div>
+                    </div>
+                        <!-- <div class="project-card">
+                            <h4>Personal Portfolio</h4>
+                            <img src="img/Screenshot 2025-09-04 103134.png" alt="" width="300px" style="border-radius: 15px">
+                            <p>Your dark-themed developer portfolio with animated code elements.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML/CSS</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">Angular</span>
+                            <span class="tech-tag">Node.js</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">Live Demo</a>
+                            <a href="#" class="project-link">GitHub</a>
+                        </div>
+                    </div> -->
+                        <div class="project-card">
+                            <h4>Silver Spoons</h4>
+                            <img src="img/Screenshot 2025-09-04 102837.png" alt="" width="300px" style="border-radius: 15px">
+                            <p>Your elegant "Farm to Table" restaurant website</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML/CSS</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">Angular</span>
+                            </div>
+                            <div class="project-links">
+                        <!-- <a href="#" class="project-link">Live Demo</a> -->
+                        <!-- <a href="#" class="project-link">GitHub</a> -->
+                    </div>
+                </div>
+                <!-- <div class="project-card">
+                    <h4>Book House </h4>
+                    <img src="img/Screenshot 2025-09-04 103150.png" alt="" width="300px" style="border-radius: 15px">
+                    <p>Bookstore & co-working space platform with the "Knowledge is treasure" concept</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">HTML/CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Angular</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">Live Demo</a>
+                        <a href="#" class="project-link">GitHub</a>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <div class="project-category fade-in">
+            <div class="project-grid">
+                
+                <div class="project-card">
+                    <h4>Vacation</h4>
+                    <img src="img/Screenshot 2025-09-04 103044.png" alt="" width="200px" style="border-radius: 15px; margin-right: 50px;">
+                    <img src="img/Screenshot 2025-09-04 103033.png" alt="" width="200px" style="border-radius: 15px">
+                    <p>Vacation Booking Platform - Complete vacation booking system with hotel search and cabin listings.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">HTML/CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Angular</span>
+                    </div>
+                    <div class="project-links">
+                        <!-- <a href="#" class="project-link">Live Demo</a> -->
+                        <!-- <a href="#" class="project-link">GitHub</a> -->
+                    </div>
+                </div>
+                
+                
+                <!-- Here -->
+                <div class="project-card">
+                    <h4>Fashion Hub</h4>
+                    <img src="img/Screenshot 2025-09-04 103211.png" alt="" width="200px" style="border-radius: 15px; margin-right: 50px;">
+                    <img src="img/Screenshot 2025-09-04 111519.png" alt="" width="200px" style="border-radius: 15px;">
+                    <p>E-commerce fashion store with "The best look anytime anywhere"</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">Bootstrap</span>
+                        <span class="tech-tag">css</span>
+                        <span class="tech-tag">js</span>
+                    </div>
+                    <div class="project-links">
+                        <!-- <a href="#" class="project-link">Live Demo</a> -->
+                        <!-- <a href="#" class="project-link">GitHub</a> -->
+                    </div>
+                </div>
+                
+            
+                  
+            </div>
+            
+        </div>
+
+
+
+
+        <div class="project-category fade-in">
+            <h3><i class="fas fa-robot"></i> AI Projects</h3>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h4>Car Price Prediction System</h4>
+                    <img src="img/Screenshot 2025-09-04 103353.png" alt="" width="500px" style="border-radius: 15px;">
+                    <p>Machine learning application that predicts car prices based on multiple features.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Machine Learning</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">Demo</a>
+                        <a href="#" class="project-link">GitHub</a>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <h4>twitter sentiment analysis</h4>
+                    <img src="img/Screenshot 2025-09-04 112305.png" alt=""width="200px" style="margin-right: 20px;">
+                    <img src="img/Screenshot 2025-09-04 112254.png" alt=""width="200px">
+                    <img src="img/Screenshot 2025-09-04 112245.png" alt=""width="200px"  style="margin-right: 20px;">
+                    <img src="img/Screenshot 2025-09-04 112236.png" alt=""width="200px">
+                    <p>Sentiment analysis of tweets using deep learning. After preprocessing noisy text,
+                         we tested GloVe + BiLSTM (72%), ELMo + BiLSTM (75%), 
+                        and DistilBERT Transformer (78%), with Transformers giving the best results.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">NLP</span>
+                        <span class="tech-tag">Neural Networks</span>
+                        <span class="tech-tag">Deep Learning</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">Demo</a>
+                        <a href="#" class="project-link">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h4>PSO Clustering App 🐦✨</h4>
+                    <img src="img/Screenshot 2025-09-09 102418.png" alt="" width="500px" style="border-radius: 15px;">
+                    <p> A Streamlit app that uses Particle Swarm Optimization for clustering, with simple visuals and interactive exploration..</p>
+                    <div class="project-tech">
+
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Streamlit</span>
+                        <span class="tech-tag">Matplotlib</span>           
+                        <span class="tech-tag">PSO</span>           
+                             </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">Demo</a>
+                        <a href="#" class="project-link">GitHub</a>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <h4>🐝 Clustering using ABC Algorithm</h4>
+                    <img src="img/Screenshot 2025-09-09 103207.png" alt=""width="500px" style="border-radius: 15px;">
+                    <p>🐝 Clustering with Artificial Bee Colony – A Streamlit app that applies the Artificial Bee Colony 
+                        algorithm for clustering with interactive visualization.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Streamlit</span>
+                        <span class="tech-tag">Matplotlib</span>
+                        <span class="tech-tag">ABC</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">Demo</a>
+                        <a href="#" class="project-link">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <h2 class="section-title fade-in">Let's Connect</h2>
+        <div class="contact-container">
+            <a href="https://linkedin.com/in/basmala-ahmed-atta" target="_blank">
+            <div class="contact-item fade-in">
+                <div class="contact-icon">
+                    <i class="fab fa-linkedin"></i>
+                </div>
+                <h4>LinkedIn</h4>
+
+
+            </div>
+            </a>
+            <a href="https://github.com/basmala2025" target="_blank">
+            <div class="contact-item fade-in">
+                <div class="contact-icon">
+                    <i class="fab fa-github"></i>
+                </div>
+                <h4>GitHub</h4>
+            </div>
+            </a>
+            <a href="https://drive.google.com/file/d/1e4EYXm5UZ5uOZq3dPJ5okfOuP-rvga3q/view?usp=sharing" >
+            <div class="contact-item fade-in">
+                <div class="contact-icon">
+                    <i class="fas fa-file-download"></i>
+                </div>
+                <h4>Resume</h4>
+            </div>
+            </a>
+            <a href="https://basmalaahmed1976@gmail.com">
+            <div class="contact-item fade-in">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h4>Email</h4>
+            </div>
+        </a>
+        </div>
+    </section>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particles.appendChild(particle);
+            }
+        }
+
+        // Scroll animations
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Download resume function
+        function downloadResume() {
+            // Replace with your actual resume URL
+            alert('Please add your resume URL to the downloadResume() function');
+            // Example: window.open('path/to/your/resume.pdf', '_blank');
+        }
+
+        // Navigation background change on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(10, 10, 10, 0.98)';
+                nav.style.boxShadow = '0 8px 32px rgba(139, 92, 246, 0.3)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 10, 0.95)';
+                nav.style.boxShadow = 'none';
+            }
+            
+            animateOnScroll();
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            animateOnScroll();
+        });
+    </script>
+</body>
+</html>
