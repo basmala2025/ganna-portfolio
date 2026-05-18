@@ -4,6 +4,8 @@ import pandas as pd
 import plotly.express as px
 from datetime import datetime, timedelta
 import random
+import io
+from openpyxl.styles import Alignment
 
 # ==========================================
 # 1. إعدادات الصفحة
@@ -72,33 +74,30 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # العنوان الرئيسي
-st.title("🏡 نظام إدارة شاليهات سفاري جروب ")
+st.title("🏡 نظام إدارة شاليهات سفاري جروب")
 
 # ==========================================
 # 2. دوال الاتصال والتعامل مع الداتا والإعدادات
 # ==========================================
 conn = st.connection("gsheets", type=GSheetsConnection)
 
-# --- الثوابت الافتراضية (عشان لو الشيت فاضي) ---
+# --- الثوابت الافتراضية ---
 DEFAULT_BROKERS = {
     "نجلاء": "#fff59d", 
     "مي": "#e1bee7",    
     "أحمد": "#c8e6c9",  
     "بسملة": "#ffcdd2"  
 }
-DEFAULT_CHALETS =  ["3 غرف 1111", "7435عماره3غرف", "3024غرفتين ارضي ", "3317غرفتين علوي ","6313غرفتين علوي","11304اليخت غرفتين","5301السفينه","5201ريفير","5202تيتانك","5201Aاطلنتس","5202Aارابيسك ","3غرف 3401a"]
+DEFAULT_CHALETS = ["شاليه أحمد", "شاليه محمد", "شاليه سارة", "شاليه البحر", "شاليه 5"]
 
-# دالة لجلب الإعدادات (الشاليهات والسماسرة الجدد)
 def get_config_data():
     try:
-        # بنقرأ من شيت اسمه Config
         df = conn.read(worksheet="Config", ttl=0)
         df = df.dropna(how='all')
         return df
     except:
         return pd.DataFrame(columns=['Type', 'Name', 'Color'])
 
-# دالة لإضافة إعداد جديد
 def add_config_item(item_type, name, color=None):
     df = get_config_data()
     new_row = {"Type": item_type, "Name": name, "Color": color}
@@ -106,30 +105,25 @@ def add_config_item(item_type, name, color=None):
     conn.update(worksheet="Config", data=updated_df)
     st.cache_data.clear()
 
-# دالة لتوليد لون عشوائي فاتح (Pastel)
 def get_random_pastel_color():
     r = random.randint(200, 255)
     g = random.randint(200, 255)
     b = random.randint(200, 255)
     return '#%02x%02x%02x' % (r, g, b)
 
-# === تجهيز القوائم النهائية (دمج القديم مع الجديد) ===
 config_df = get_config_data()
 
-# 1. قائمة الشاليهات
-new_chalets = config_df[config_df['Type'] == 'Chalet']['Name'].tolist()
-ALL_CHALETS = sorted(list(set(DEFAULT_CHALETS + new_chalets))) # set لمنع التكرار
+new_chalets = config_df[config_df['Type'] == 'Chalet']['Name'].astype(str).tolist() if not config_df.empty else []
+ALL_CHALETS = sorted(list(set(DEFAULT_CHALETS + new_chalets)))
 
-# 2. قائمة السماسرة والألوان
 ALL_BROKERS_COLORS = DEFAULT_BROKERS.copy()
-new_brokers_df = config_df[config_df['Type'] == 'Broker']
-for _, row in new_brokers_df.iterrows():
-    ALL_BROKERS_COLORS[row['Name']] = row['Color']
+if not config_df.empty:
+    new_brokers_df = config_df[config_df['Type'] == 'Broker']
+    for _, row in new_brokers_df.iterrows():
+        ALL_BROKERS_COLORS[str(row['Name'])] = row['Color']
 
 ALL_BROKERS_NAMES = list(ALL_BROKERS_COLORS.keys())
 
-
-# --- دوال البيانات الأساسية ---
 def get_data():
     try:
         df = conn.read(worksheet="Data", ttl=0)
@@ -187,8 +181,7 @@ def check_availability(chalet, start, end):
 # ==========================================
 # 3. واجهة المستخدم (Tabs)
 # ==========================================
-# إضافة تاب الإعدادات في النهاية
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["📅 الحجوزات والجدول", "⏳ الحجوزات غير المؤكدة", "❌ سجل الإلغاء", "📊 التحليل المالي", "⚙️ الإعدادات"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["📅 الحجوزات والجدول", "⏳ الحجوزات المعلقة", "❌ سجل الإلغاء", "📊 التحليل المالي", "⚙️ الإعدادات"])
 
 # === التاب 1: الحجز والجدول ===
 with tab1:
@@ -197,7 +190,6 @@ with tab1:
         with st.form("booking_form"):
             c1, c2, c3 = st.columns(3)
             with c1:
-                # استخدام القوائم الديناميكية المحدثة
                 chalet_name = st.selectbox("الشاليه", ALL_CHALETS)
                 broker_name = st.selectbox("السمسار", ALL_BROKERS_NAMES)
             with c2:
@@ -245,56 +237,100 @@ with tab1:
 
     st.markdown("---")
     
-    st.subheader("📅 الحجوزات")
+    st.subheader("📅 الشييت")
     df = get_data()
+    
+    # تحديد تواريخ السنة الحالية والشهر الحالي
+    today = datetime.now()
+    current_year = today.year
+    
+    # 🌟 1. إنشاء جدول كامل (من 1 يناير لـ 31 ديسمبر) خصيصاً لملف الإكسيل
+    full_year_range = pd.date_range(start=f'{current_year}-01-01', end=f'{current_year}-12-31')
+    full_matrix = pd.DataFrame(index=full_year_range, columns=ALL_CHALETS).fillna('')
+
     if not df.empty:
-        grid = []
         for _, row in df.iterrows():
             try:
                 s = pd.to_datetime(row['Start_Date'])
                 e = pd.to_datetime(row['End_Date'])
-                curr = s
+                chalet = row['Chalet']
+                
+                if chalet not in full_matrix.columns:
+                    full_matrix[chalet] = ''
+
                 is_unconfirmed = (row.get('Status') == 'غير مؤكد')
                 if is_unconfirmed:
                     cell_info = f"{row['Broker']}\n(غير مؤكد)"
-                    color_key = "unconfirmed"
                 else:
                     rem = row.get('Remaining', 0)
                     cell_info = f"{row['Broker']}\n({row['Total_Price']})\nباقي:{rem}"
-                    color_key = row['Broker']
 
+                curr = s
                 while curr < e:
-                    grid.append({'Date': curr, 'Chalet': row['Chalet'], 'Info': cell_info, 'ColorKey': color_key})
+                    if curr in full_matrix.index:
+                        full_matrix.at[curr, chalet] = cell_info
                     curr += timedelta(days=1)
             except: continue
             
-        if grid:
-            grid_df = pd.DataFrame(grid)
-            current_year = datetime.now().year
-            full_range = pd.date_range(start=f'{current_year}-01-01', end=f'{current_year}-12-31')
-            
-            matrix = grid_df.pivot_table(index='Date', columns='Chalet', values='Info', aggfunc='last')
-            matrix = matrix.reindex(full_range)
-            matrix.index = matrix.index.strftime('%a %d-%m')
+    # 🌟 2. تصفية جدول العرض على ستريم ليت بيبدأ من أول الشهر الحالي فقط
+    start_of_current_month = today.replace(day=1)
+    display_matrix = full_matrix.loc[start_of_current_month:].copy()
+    
+    # تحويل شكل التاريخ لنص منسق لكلا الجدولين (بعد فلترة شهور العرض)
+    full_matrix.index = full_matrix.index.strftime('%a %d-%m')
+    display_matrix.index = display_matrix.index.strftime('%a %d-%m')
 
-            def colorize(val):
-                if pd.isna(val): return ''
-                if "(غير مؤكد)" in str(val):
-                    return 'background-color: #eeeeee; color: #555; border: 1px solid white; font-style: italic;'
+    # دالة التلوين الثابتة
+    def colorize(val):
+        val_str = str(val).strip()
+        if not val_str or val_str == 'None' or val_str == '': return ''
+        
+        if "(غير مؤكد)" in val_str:
+            return 'background-color: #eeeeee; color: #555; border: 1px solid white; font-style: italic;'
+        
+        color = "#e0e0e0"
+        for name, code in ALL_BROKERS_COLORS.items():
+            if name in val_str: color = code
+        return f'background-color: {color}; color: black; border: 1px solid white; font-weight: bold'
+
+    # تلوين الجدولين بشكل منفصل
+    styled_full_matrix = full_matrix.style.map(colorize)
+    styled_display_matrix = display_matrix.style.map(colorize)
+
+    # 🌟 3. تخصيص زر التحميل ليرسل الجدول الكامل (بكل شهور السنة)
+    col_dl1, col_dl2 = st.columns([1, 4])
+    with col_dl1:
+        buffer = io.BytesIO()
+        try:
+            with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+                # بنحفظ الـ full_matrix (السنة كاملة) في الإكسيل
+                styled_full_matrix.to_excel(writer, sheet_name='الجدول السنوي الكامل')
                 
-                color = "#e0e0e0"
-                # استخدام خريطة الألوان المحدثة
-                for name, code in ALL_BROKERS_COLORS.items():
-                    if name in str(val): color = code
-                return f'background-color: {color}; color: black; border: 1px solid white; font-weight: bold'
+                worksheet = writer.sheets['الجدول السنوي الكامل']
+                worksheet.freeze_panes = 'B2'
+                worksheet.sheet_view.rightToLeft = True
+                
+                for col in worksheet.columns:
+                    column_letter = col[0].column_letter
+                    worksheet.column_dimensions[column_letter].width = 22
+                    for cell in col:
+                        cell.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
 
-            st.dataframe(matrix.style.map(colorize), use_container_width=True, height=600)
-    else:
-        st.info("لا توجد بيانات.")
+            st.download_button(
+                label="📥 تحميل الجدول السنوي كاملاً (Excel) 🎨",
+                data=buffer.getvalue(),
+                file_name=f"bookings_full_year_{current_year}.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            )
+        except Exception as e:
+            st.warning("⚠️ لتشغيل التحميل، الرجاء التأكد من وجود مكتبة openpyxl.")
+
+    # 🌟 4. عرض نسخة الشهر الحالي فقط على شاشة ستريم ليت لسهولة التصفح
+    st.dataframe(styled_display_matrix, use_container_width=True, height=600)
 
 # === التاب 2: الحجوزات المعلقة ===
 with tab2:
-    st.header("⏳ الحجوزات (غير المؤكدة)")
+    st.header("⏳ الحجوزات المعلقة (غير المؤكدة)")
     df_pending = get_data()
     if not df_pending.empty and 'Status' in df_pending.columns:
         df_pending = df_pending[df_pending['Status'] == 'غير مؤكد']
@@ -407,14 +443,13 @@ with tab4:
     else:
         st.info("لا توجد بيانات.")
 
-# === التاب 5: الإعدادات (جديد) ===
+# === التاب 5: الإعدادات ===
 with tab5:
     st.header("⚙️ إعدادات النظام")
     st.info("يمكنك هنا إضافة شاليهات جديدة أو سماسرة جدد للنظام بشكل دائم.")
     
     col_set1, col_set2 = st.columns(2)
     
-    # 1. إضافة شاليه
     with col_set1:
         with st.form("add_chalet_form"):
             st.subheader("🏠 إضافة شاليه جديد")
@@ -429,20 +464,18 @@ with tab5:
                 else:
                     st.error("يرجى كتابة الاسم.")
     
-    # 2. إضافة سمسار
     with col_set2:
         with st.form("add_broker_form"):
             st.subheader("👤 إضافة بروكر جديد")
-            new_broker_name = st.text_input("اسم السمسار الجديد")
+            new_broker_name = st.text_input("اسم بروكر الجديد")
             if st.form_submit_button("إضافة بروكر"):
                 if new_broker_name and new_broker_name not in ALL_BROKERS_NAMES:
-                    # توليد لون عشوائي
                     rand_color = get_random_pastel_color()
                     add_config_item("Broker", new_broker_name, rand_color)
                     st.success(f"تم إضافة {new_broker_name} وتم تعيين لون له ({rand_color}) 🎨")
                     st.rerun()
                 elif new_broker_name in ALL_BROKERS_NAMES:
-                    st.warning("هذا السمسار موجود بالفعل.")
+                    st.warning("هذا البروكر موجود بالفعل.")
                 else:
                     st.error("يرجى كتابة الاسم.")
 
@@ -456,9 +489,8 @@ with tab5:
     
     with ls2:
         st.write("**السماسرة المسجلين وألوانهم:**")
-        # عرض الألوان كخلفية
         brokers_display = []
         for name, color in ALL_BROKERS_COLORS.items():
             brokers_display.append({"السمسار": name, "كود اللون": color})
         
-        st.dataframe(pd.DataFrame(brokers_display).style.applymap(lambda x: f'background-color: {x}' if x.startswith('#') else '', subset=['كود اللون']), use_container_width=True)
+        st.dataframe(pd.DataFrame(brokers_display).style.map(lambda x: f'background-color: {x}' if str(x).startswith('#') else '', subset=['كود اللون']), use_container_width=True)
